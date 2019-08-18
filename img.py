@@ -25,7 +25,9 @@ def ansi_color(image,dither):
          #255,255,255
         )+(0,0,0)*(255-8)
     )
-    image = image.convert("RGB")
+    new_image = Image.new("RGBA", image.size, "WHITE") # Create a white rgba background
+    new_image.paste(image, (0, 0), image)
+    image = new_image.convert("RGB")
     smooth = image.quantize(palette=pal_image,dither=0).convert("RGB")
     smooth = Image.blend(smooth, image, dither)
     return smooth.quantize(palette=pal_image)
